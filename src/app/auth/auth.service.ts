@@ -1,6 +1,7 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { catchError, throwError } from "rxjs";
+import { catchError, throwError, Subject, tap } from "rxjs";
+import { UserModel } from "./user.model";
 
 export interface AuthResponseData {
    kind: string;
@@ -15,10 +16,9 @@ export interface AuthResponseData {
 @Injectable()
 export class AuthService {
       /*
-https://www.googleapis.com/identitytoolkit/v3/relyingparty/singnupNewUser?key=[API_key]
-
-AIzaSyA6L4_oOmeITyqsnFDKbiZTKLE9bDTls8U
+      [API_key  AIzaSyA6L4_oOmeITyqsnFDKbiZTKLE9bDTls8U]
    */
+   user = new Subject<UserModel>();
 
    constructor(
       private http: HttpClient
@@ -36,7 +36,11 @@ AIzaSyA6L4_oOmeITyqsnFDKbiZTKLE9bDTls8U
             password: password,
             returnSecureToken: true
          }
-         ).pipe(catchError(this.hendleError))
+         ).pipe(
+            catchError(this.hendleError),
+            tap( respData => {
+               this.hendleAuthentication(respData.email, respData.localId, respData.idToken, +respData.expiresIn)
+            }))
    }
 
    login(
@@ -50,7 +54,25 @@ AIzaSyA6L4_oOmeITyqsnFDKbiZTKLE9bDTls8U
             password: password,
             returnSecureToken: true
          }
-      ).pipe(catchError(this.hendleError))
+      ).pipe(catchError(this.hendleError),
+         tap( respData => {
+            this.hendleAuthentication(respData.email, respData.localId, respData.idToken, +respData.expiresIn)
+         }))
+   }
+
+   private hendleAuthentication(
+         email: string, 
+         userId: string,
+         token: string, 
+         expiresIn: number) {
+      const expirationDate = new Date(new Date().getTime() + +expiresIn * 1000)
+      const user = new UserModel(
+         email,
+         userId,
+         token,
+         expirationDate
+         );
+         this.user.next(user)
    }
 
    private hendleError(errorResponse: HttpErrorResponse) {
