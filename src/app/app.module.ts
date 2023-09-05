@@ -26,6 +26,7 @@ import { AuthService } from './auth/auth.service';
 import { LoadingSpiner } from './shared/loading-spiner/loading-spiner.component';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { AlertComponent } from './shared/alert/alert.component';
+import { PlaceholderDirective } from './shared/placeholder/placeholder.directive';
 
 
 export const httpInterceptorProviders = [
@@ -47,6 +48,7 @@ export const httpInterceptorProviders = [
     AuthComponent,
     LoadingSpiner,
     AlertComponent,
+    PlaceholderDirective, // only for examle
   ],
   imports: [
     BrowserModule,

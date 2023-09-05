@@ -1,15 +1,25 @@
-import { Component, OnDestroy, OnInit, ViewChild } from "@angular/core";
+import { Component, 
+   ComponentFactoryResolver, //only example
+   OnDestroy, 
+   OnInit, 
+   ViewChild 
+} from "@angular/core";
 import { NgForm } from "@angular/forms";
 import { Observable } from "rxjs";
+import { Router } from "@angular/router";
 
 import { AuthService, AuthResponseData } from "./auth.service";
-import { Router } from "@angular/router";
+import { AlertComponent } from "../shared/alert/alert.component";
+import { PlaceholderDirective } from "../shared/placeholder/placeholder.directive";
+
 
 @Component({
    selector: 'app-auth',
    templateUrl: './auth.component.html'
 })
 export class AuthComponent implements OnInit, OnDestroy{
+   @ViewChild(PlaceholderDirective) alertHost: PlaceholderDirective; // only example
+
    @ViewChild('authForm') authForm: NgForm; 
    isLoginMode = true;
    isLoading = false;
@@ -18,6 +28,7 @@ export class AuthComponent implements OnInit, OnDestroy{
    constructor(
       private authService: AuthService,
       private router: Router,
+      private componentFactoryResolver: ComponentFactoryResolver // only example
    ) {}
 
    ngOnInit(): void {
@@ -53,6 +64,8 @@ export class AuthComponent implements OnInit, OnDestroy{
          }, errorMessege => {
             console.log(errorMessege);
             this.error = errorMessege;
+            //example 
+            this.showErrorAlert(errorMessege);
             this.isLoading = false;
          }
       );
@@ -63,6 +76,15 @@ export class AuthComponent implements OnInit, OnDestroy{
 
    onHandleError() {
       this.error = null;
+   }
+
+   //create alert message from code, only Example
+   showErrorAlert (message: string) {
+      const alertCompFactory =  this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
+      const hostViewContainerRef = this.alertHost.viewContainerRef;
+      hostViewContainerRef.clear();
+
+      hostViewContainerRef.createComponent(alertCompFactory)
    }
 
    ngOnDestroy(): void {
