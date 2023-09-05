@@ -1,6 +1,8 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { catchError, throwError, Subject, tap } from "rxjs";
+import { catchError, throwError, Subject, tap, BehaviorSubject } from "rxjs";
+import { Router } from "@angular/router";
+
 import { UserModel } from "./user.model";
 
 export interface AuthResponseData {
@@ -17,11 +19,13 @@ export interface AuthResponseData {
 export class AuthService {
       /*
       [API_key  AIzaSyA6L4_oOmeITyqsnFDKbiZTKLE9bDTls8U]
+      user = new Subject<UserModel>();
    */
-   user = new Subject<UserModel>();
+   user = new BehaviorSubject<UserModel>(null);
 
    constructor(
-      private http: HttpClient
+      private http: HttpClient,
+      private router: Router
    ) {}
 
    signup (
@@ -60,6 +64,36 @@ export class AuthService {
          }))
    }
 
+   autoLogin() {
+      const userData: UserModel = JSON.parse(localStorage.getItem('userData'));
+      if (!userData) {
+         return;
+      }
+
+      const loadedUser = new UserModel(
+            userData.email, 
+            userData.id, 
+            userData._token, 
+            new Date(userData._tokenExpirationDate)
+         )
+
+         if (loadedUser.token) {
+            this.user.next(loadedUser);
+         }
+   }
+
+   logout() {
+      this.user.next(null);
+      this.router.navigate(['/auth']);
+      localStorage.removeItem('userData');
+   }
+
+   autoLogout(expirationDuration: number) {
+      setTimeout(() => {
+         this.logout();
+      }, expirationDuration)
+   }
+
    private hendleAuthentication(
          email: string, 
          userId: string,
@@ -72,7 +106,8 @@ export class AuthService {
          token,
          expirationDate
          );
-         this.user.next(user)
+         this.user.next(user);
+         localStorage.setItem('userData', JSON.stringify(user))
    }
 
    private hendleError(errorResponse: HttpErrorResponse) {

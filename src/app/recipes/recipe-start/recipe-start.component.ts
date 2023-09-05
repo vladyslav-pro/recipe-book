@@ -14,10 +14,10 @@ export class RecipeStartComponent implements OnInit, OnDestroy{
    ) {}
 
    ngOnInit(): void {
-     this.getlist = this.dataStoregeService.fetchData().subscribe();
+   //   this.getlist = this.dataStoregeService.fetchData().subscribe();
    }
 
    ngOnDestroy(): void {
-      this.getlist.unsubscribe()
+      // this.getlist.unsubscribe()
    }
 }

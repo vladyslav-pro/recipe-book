@@ -24,8 +24,12 @@ import { RecipeResolverService } from './recipes/recipes-resolver.service';
 import { AuthComponent } from './auth/auth.component';
 import { AuthService } from './auth/auth.service';
 import { LoadingSpiner } from './shared/loading-spiner/loading-spiner.component';
+import { AuthInterceptorService } from './auth/auth-interceptor.service';
 
 
+export const httpInterceptorProviders = [
+   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }
+]
 @NgModule({
   declarations: [
     AppComponent,
@@ -50,6 +54,7 @@ import { LoadingSpiner } from './shared/loading-spiner/loading-spiner.component'
     HttpClientModule,
   ],
   providers: [
+      httpInterceptorProviders,
       ShoppingListSrvice,
       RecipeService,
       DataStoregeService,
