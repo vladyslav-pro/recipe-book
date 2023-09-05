@@ -25,6 +25,7 @@ import { AuthComponent } from './auth/auth.component';
 import { AuthService } from './auth/auth.service';
 import { LoadingSpiner } from './shared/loading-spiner/loading-spiner.component';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
+import { AlertComponent } from './shared/alert/alert.component';
 
 
 export const httpInterceptorProviders = [
@@ -45,6 +46,7 @@ export const httpInterceptorProviders = [
     RecipeEditComponent,
     AuthComponent,
     LoadingSpiner,
+    AlertComponent,
   ],
   imports: [
     BrowserModule,
@@ -59,7 +61,7 @@ export const httpInterceptorProviders = [
       RecipeService,
       DataStoregeService,
       RecipeResolverService,
-      AuthService
+      AuthService,
    ],
   bootstrap: [AppComponent]
 })

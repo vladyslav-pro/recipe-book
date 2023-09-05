@@ -61,6 +61,10 @@ export class AuthComponent implements OnInit, OnDestroy{
       form.reset()
    }
 
+   onHandleError() {
+      this.error = null;
+   }
+
    ngOnDestroy(): void {
       
    }
