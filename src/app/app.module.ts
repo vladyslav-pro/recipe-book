@@ -16,6 +16,7 @@ import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { RecipesModule } from './recipes/recipes.module';
 import { ShoppingListModule } from './shopping-list/shoppig-list.module';
 import { SharedModule } from './shared/shared.module';
+import { AuthModule } from './auth/auth.module';
 
 
 export const httpInterceptorProviders = [
@@ -26,7 +27,6 @@ export const httpInterceptorProviders = [
   declarations: [
     AppComponent,
     HeaderComponent,
-    AuthComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,6 +37,7 @@ export const httpInterceptorProviders = [
     RecipesModule,
     ShoppingListModule,
     SharedModule,
+    AuthModule
   ],
   providers: [
       httpInterceptorProviders,
