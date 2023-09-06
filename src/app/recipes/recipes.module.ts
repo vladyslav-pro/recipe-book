@@ -27,6 +27,7 @@ import { RecipeRoutingModule } from "./recipes-routing.module";
       ReactiveFormsModule,
       RecipeRoutingModule,
    ],
+   /* When you use routing you can clear this array from divided module 
    exports: [
       RecipesComponent,
       RecipeListComponent,
@@ -35,5 +36,6 @@ import { RecipeRoutingModule } from "./recipes-routing.module";
       RecipeStartComponent,
       RecipeEditComponent,
    ]
+   */
 })
 export class RecipesModule {}
