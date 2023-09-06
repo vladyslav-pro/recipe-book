@@ -18,10 +18,10 @@ import { PlaceholderDirective } from "../shared/placeholder/placeholder.directiv
    templateUrl: './auth.component.html'
 })
 export class AuthComponent implements OnInit, OnDestroy{
-   //===============
+/*
    @ViewChild(PlaceholderDirective) alertHost: PlaceholderDirective; // only example
    private closeSub: Subscription;
-   //===============
+*/
 
    @ViewChild('authForm') authForm: NgForm; 
    isLoginMode = true;
@@ -68,7 +68,7 @@ export class AuthComponent implements OnInit, OnDestroy{
             console.log(errorMessege);
             this.error = errorMessege;
             //example 
-            this.showErrorAlert(errorMessege);
+            // this.showErrorAlert(errorMessege);
             this.isLoading = false;
          }
       );
@@ -80,7 +80,7 @@ export class AuthComponent implements OnInit, OnDestroy{
    onHandleError() {
       this.error = null;
    }
-
+/*
    //create alert message from code, only Example
    private showErrorAlert (message: string) {
       const alertCompFactory =  this.componentFactoryResolver.resolveComponentFactory(AlertComponent);
@@ -94,11 +94,11 @@ export class AuthComponent implements OnInit, OnDestroy{
          hostViewContainerRef.clear();
       })
    }
-
+*/
    ngOnDestroy() {
-      if (this.closeSub) {
+/*      if (this.closeSub) {
          this.closeSub.unsubscribe();
-      }
+      }*/
    }
 
 

@@ -5,6 +5,4 @@ import { Component } from "@angular/core"
    template: '<div class="lds-hourglass"></div>',
    styleUrls: ['./loading-spiner.component.css']
 })
-export class LoadingSpiner {
-
-}
+export class LoadingSpiner {}
