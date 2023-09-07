@@ -1,9 +1,10 @@
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { catchError, throwError, Subject, tap, BehaviorSubject } from "rxjs";
+import { catchError, throwError, tap, BehaviorSubject } from "rxjs";
 import { Router } from "@angular/router";
 
 import { UserModel } from "./user.model";
+import { environment } from "../../environments/environment";
 
 export interface AuthResponseData {
    kind: string;
@@ -17,10 +18,7 @@ export interface AuthResponseData {
 
 @Injectable()
 export class AuthService {
-      /*
-      [API_key  AIzaSyA6L4_oOmeITyqsnFDKbiZTKLE9bDTls8U]
-      user = new Subject<UserModel>();
-   */
+
    user = new BehaviorSubject<UserModel>(null);
    private tokenExpirationTimer: any
 
@@ -34,8 +32,7 @@ export class AuthService {
       password: string
    ) {
       return this.http.post<AuthResponseData>(
-         // 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/singnupNewUser?key=AIzaSyA6L4_oOmeITyqsnFDKbiZTKLE9bDTls8U',
-         'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyA6L4_oOmeITyqsnFDKbiZTKLE9bDTls8U',
+         'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + environment.firebaseAPIKey,
          {
             email: email,
             password: password,
@@ -53,7 +50,7 @@ export class AuthService {
       password: string
       ) {
       return this.http.post<AuthResponseData>(
-         'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyA6L4_oOmeITyqsnFDKbiZTKLE9bDTls8U',
+         'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + environment.firebaseAPIKey,
          {
             email: email,
             password: password,
