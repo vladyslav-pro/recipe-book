@@ -10,13 +10,10 @@ import { ShoppingListSrvice } from './shopping-list/shopping-list.service'
 import { AppRoutingModule } from './app-routing.module';
 import { DataStoregeService } from './shared/data-storege.service'
 import { RecipeResolverService } from './recipes/recipes-resolver.service';
-import { AuthComponent } from './auth/auth.component';
 import { AuthService } from './auth/auth.service';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
-import { RecipesModule } from './recipes/recipes.module';
-import { ShoppingListModule } from './shopping-list/shoppig-list.module';
 import { SharedModule } from './shared/shared.module';
-import { AuthModule } from './auth/auth.module';
+
 
 
 export const httpInterceptorProviders = [
@@ -34,10 +31,7 @@ export const httpInterceptorProviders = [
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    RecipesModule,
-    ShoppingListModule,
     SharedModule,
-    AuthModule
   ],
   providers: [
       httpInterceptorProviders,
